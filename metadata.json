@@ -1,0 +1,5 @@
+{
+  "name": "Evo Web Language Compiler",
+  "description": "A real-time compiler and previewer for the custom Evo Web Language (EWL).",
+  "requestFramePermissions": []
+}
