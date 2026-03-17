@@ -152,7 +152,8 @@ const COMMANDS = [
   { cmd: 'php_loop "table" { ... }', desc: 'PHP database loop (use {{row["col"]}} for variables)' },
   { cmd: 'navbar_h { ... }', desc: 'Horizontal navigation bar' },
   { cmd: 'navbar_v { ... }', desc: 'Vertical navigation bar' },
-  { cmd: 'link_title "Text" -> "URL"', desc: 'Navigation link (used inside navbars)' }
+  { cmd: 'link_title "Text" -> "URL"', desc: 'Navigation link (used inside navbars)' },
+  { cmd: 'eml { ... }', desc: 'Embed EML code directly inside EWL' }
 ];
 
 interface Tab {
@@ -339,8 +340,8 @@ export default function App() {
   return (
     <div className={`min-h-screen transition-colors duration-300 ${appTheme === 'dark' ? 'bg-[#0F0F0F] text-white' : 'bg-[#F5F5F4] text-[#1A1A1A]'} font-sans selection:bg-emerald-100 selection:text-emerald-900`}>
       {/* Header */}
-      <header className={`h-16 border-b ${appTheme === 'dark' ? 'border-white/5 bg-black/80' : 'border-black/5 bg-white/80'} backdrop-blur-md sticky top-0 z-50 px-6 flex items-center justify-between`}>
-        <div className="flex items-center gap-6">
+      <header className={`h-auto lg:h-16 border-b ${appTheme === 'dark' ? 'border-white/5 bg-black/80' : 'border-black/5 bg-white/80'} backdrop-blur-md sticky top-0 z-50 px-4 lg:px-6 py-3 lg:py-0 flex flex-col lg:flex-row items-center justify-between gap-4`}>
+        <div className="flex flex-wrap items-center gap-4 lg:gap-6 w-full lg:w-auto">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-emerald-600/20">
               <FileCode size={22} />
@@ -411,7 +412,7 @@ export default function App() {
           </button>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3 lg:gap-4 w-full lg:w-auto justify-end">
           {/* Editor Controls */}
           <div className="flex items-center gap-1 bg-gray-100 dark:bg-white/5 p-1 rounded-xl">
             <button
@@ -501,11 +502,11 @@ export default function App() {
         </div>
       </header>
 
-      <main className="h-[calc(100vh-64px)] flex overflow-hidden">
+      <main className="h-auto lg:h-[calc(100vh-64px)] flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden">
         {view === 'playground' ? (
           <>
             {/* Editor Section */}
-            <div className={`w-1/2 border-r ${appTheme === 'dark' ? 'border-white/5 bg-[#141414]' : 'border-black/5 bg-white'} flex flex-col`}>
+            <div className={`w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r ${appTheme === 'dark' ? 'border-white/5 bg-[#141414]' : 'border-black/5 bg-white'} flex flex-col h-[50vh] lg:h-full`}>
               <div className={`h-10 px-4 border-b ${appTheme === 'dark' ? 'border-white/5 bg-black/20' : 'border-black/5 bg-gray-50/50'} flex items-center justify-between`}>
                 <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gray-400">
                   <Code2 size={14} />
@@ -551,7 +552,7 @@ export default function App() {
             </div>
 
             {/* Preview Section */}
-            <div className={`w-1/2 ${appTheme === 'dark' ? 'bg-[#0A0A0A]' : 'bg-[#F5F5F4]'} flex flex-col`}>
+            <div className={`w-full lg:w-1/2 ${appTheme === 'dark' ? 'bg-[#0A0A0A]' : 'bg-[#F5F5F4]'} flex flex-col min-h-[50vh] lg:h-full`}>
               <div className={`h-10 px-4 border-b ${appTheme === 'dark' ? 'border-white/5 bg-black/20' : 'border-black/5 bg-white/50'} flex items-center justify-between`}>
                 <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-gray-400">
                   <Eye size={14} />
@@ -576,9 +577,9 @@ export default function App() {
             </div>
               </div>
               
-              <div className="flex-1 overflow-auto p-8 flex justify-center">
+              <div className="flex-1 overflow-auto p-4 lg:p-8 flex justify-center items-start lg:items-center">
                 <div 
-                  className={`bg-white dark:bg-gray-900 shadow-2xl shadow-black/10 rounded-3xl overflow-hidden transition-all duration-500 ${deviceMode === 'mobile' ? 'w-[375px] h-[667px]' : 'w-full max-w-4xl h-full'}`}
+                  className={`bg-white dark:bg-gray-900 shadow-2xl shadow-black/10 rounded-3xl overflow-hidden transition-all duration-500 ${deviceMode === 'mobile' ? 'w-[320px] lg:w-[375px] h-[568px] lg:h-[667px]' : 'w-full max-w-5xl h-full min-h-[400px]'}`}
                 >
                   <div className="h-8 bg-gray-50 dark:bg-black/20 border-b border-black/5 dark:border-white/5 flex items-center px-4 gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-red-400/20 border border-red-400/30" />
@@ -606,7 +607,7 @@ export default function App() {
           </>
         ) : (
           <div className="flex-1 flex flex-col">
-            <div className={`p-8 border-b ${appTheme === 'dark' ? 'border-white/5 bg-black/20' : 'border-black/5 bg-white'} flex items-center justify-between`}>
+            <div className={`p-4 lg:p-8 border-b ${appTheme === 'dark' ? 'border-white/5 bg-black/20' : 'border-black/5 bg-white'} flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4`}>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-emerald-600/10 text-emerald-600 rounded-2xl flex items-center justify-center">
                   <ArrowRightLeft size={28} />
@@ -632,8 +633,8 @@ export default function App() {
                 </button>
               </div>
             </div>
-            <div className="flex-1 flex overflow-hidden">
-              <div className={`w-1/2 border-r ${appTheme === 'dark' ? 'border-white/5' : 'border-black/5'} flex flex-col`}>
+            <div className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden">
+              <div className={`w-full lg:w-1/2 border-b lg:border-b-0 lg:border-r ${appTheme === 'dark' ? 'border-white/5' : 'border-black/5'} flex flex-col h-[40vh] lg:h-full`}>
                 <div className="p-4 bg-gray-50 dark:bg-black/20 text-[10px] font-bold uppercase tracking-widest text-gray-400">Input EWL Code</div>
                 <textarea
                   value={converterInput}
@@ -642,7 +643,7 @@ export default function App() {
                   placeholder="Paste your EWL code here starting with <EWL 1.0>..."
                 />
               </div>
-              <div className="w-1/2 flex flex-col bg-gray-50/50 dark:bg-black/40">
+              <div className="w-full lg:w-1/2 flex flex-col bg-gray-50/50 dark:bg-black/40 h-[40vh] lg:h-full">
                 <div className="p-4 bg-gray-100 dark:bg-black/30 text-[10px] font-bold uppercase tracking-widest text-gray-400 flex justify-between items-center">
                   <span>Generated HTML Output</span>
                   <button 

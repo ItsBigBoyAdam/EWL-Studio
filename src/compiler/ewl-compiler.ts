@@ -192,7 +192,7 @@ function parseBlocks(lines: string[]): string {
       continue;
     }
 
-    if (line.startsWith("eml {")) {
+    if (line.toLowerCase().startsWith("eml {")) {
       const blockLines: string[] = [];
       let depth = 1;
       i++;
